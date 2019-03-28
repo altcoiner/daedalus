@@ -42,7 +42,7 @@ export const createMainWindow = (isInSafeMode: boolean, locale: string) => {
     webPreferences: {
       nodeIntegration: isTest,
       webviewTag: false,
-      enableRemoteModule: isTest,
+      enableRemoteModule: true,
       preload: path.join(__dirname, './preload.js'),
     },
   };
