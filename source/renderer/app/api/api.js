@@ -927,7 +927,9 @@ export default class AdaApi {
     }
   };
 
-  getNodeInfo = async (): Promise<GetNetworkStatusNodeInfoResponse> => {
+  getNodeInfo = async (
+    queryInfoParams?: NodeInfoQueryParams
+  ): Promise<GetNetworkStatusNodeInfoResponse> => {
     const isForceNTPCheck = !!queryInfoParams;
     const loggerText = `AdaApi::getNodeInfo${
       isForceNTPCheck ? ' (FORCE-NTP-CHECK)' : ''
@@ -1000,9 +1002,7 @@ export default class AdaApi {
     });
   };
 
-  getNetworkStatus = async (
-    queryInfoParams?: NodeInfoQueryParams
-  ): Promise<any> => {
+  getNetworkStatus = async (): Promise<any> => {
     Logger.warn('GOOGLE REQUEST NO#1 called');
     try {
       await externalRequest({
