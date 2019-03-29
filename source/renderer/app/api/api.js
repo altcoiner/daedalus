@@ -99,7 +99,6 @@ import type {
   NodeInfoResponse,
   NodeSettingsResponse,
   NodeSoftware,
-  GetNetworkStatusResponse,
   GetNetworkStatusNodeInfoResponse,
   GetNetworkStatusNodeSettingsResponse,
 } from './nodes/types';
@@ -928,9 +927,7 @@ export default class AdaApi {
     }
   };
 
-  getNodeInfo = async (
-    queryInfoParams?: NodeInfoQueryParams
-  ): Promise<GetNetworkStatusNodeInfoResponse> => {
+  getNodeInfo = async (): Promise<GetNetworkStatusNodeInfoResponse> => {
     const isForceNTPCheck = !!queryInfoParams;
     const loggerText = `AdaApi::getNodeInfo${
       isForceNTPCheck ? ' (FORCE-NTP-CHECK)' : ''
