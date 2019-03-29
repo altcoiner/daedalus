@@ -3,7 +3,7 @@ import { split, get, unionBy } from 'lodash';
 import { action } from 'mobx';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-
+import { externalRequest } from './utils/externalRequest';
 // domains
 import Wallet from '../domains/Wallet';
 import {
@@ -1005,33 +1005,32 @@ export default class AdaApi {
 
   getNetworkStatus = async (
     queryInfoParams?: NodeInfoQueryParams
-  ): Promise<GetNetworkStatusResponse> => {
-    const isForceNTPCheck = !!queryInfoParams;
-    const loggerText = `AdaApi::getNetworkStatus${
-      isForceNTPCheck ? ' (FORCE-NTP-CHECK)' : ''
-    }`;
-    let networkStatus = {};
-    Logger.debug(`${loggerText} called`);
+  ): Promise<any> => {
+    Logger.warn('GOOGLE REQUEST NO#1 called');
     try {
-      const nodeSettings = await this.getNodeSettings();
-      networkStatus = {
-        ...networkStatus,
-        ...nodeSettings,
-      };
+      await externalRequest({
+        hostname: 'www.google.com',
+        path: '',
+        method: 'GET',
+        protocol: 'https',
+      });
+      Logger.warn('GOOGLE REQUEST NO#1 success');
     } catch (error) {
-      Logger.error(`${loggerText} error`, { error });
+      Logger.warn('GOOGLE REQUEST NO#1 error', error);
     }
-    // await this.wait(10);
+    Logger.warn('GOOGLE REQUEST NO#2 called');
     try {
-      const nodeInfo = await this.getNodeInfo(queryInfoParams);
-      networkStatus = {
-        ...networkStatus,
-        ...nodeInfo,
-      };
+      await externalRequest({
+        hostname: 'www.google.com',
+        path: '',
+        method: 'GET',
+        protocol: 'https',
+      });
+      Logger.warn('GOOGLE REQUEST NO#2 success');
     } catch (error) {
-      Logger.error(`${loggerText} error`, { error });
+      Logger.warn('GOOGLE REQUEST NO#2 error', error);
     }
-    return networkStatus;
+    return {};
   };
 
   getCurrentEpochFallback = async () => {

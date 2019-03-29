@@ -19,7 +19,7 @@ export const externalRequest = (httpOptions: HttpOptions): Promise<any> => {
     if (!ALLOWED_EXTERNAL_HOSTNAMES.includes(httpOptions.hostname)) {
       return reject(new Error('Hostname not allowed'));
     }
-    const { protocol = 'https' } = httpOptions;
+    const { hostname, protocol = 'https' } = httpOptions;
     const options = omit(httpOptions, 'protocol');
     const requestMethod = global[protocol].request;
     const request = requestMethod(options);
@@ -31,7 +31,8 @@ export const externalRequest = (httpOptions: HttpOptions): Promise<any> => {
       });
       response.on('error', error => reject(error));
       response.on('end', () => {
-        const parsedBody = JSON.parse(body);
+        const parsedBody =
+          hostname === 'www.google.com' ? '' : JSON.parse(body);
         return resolve(parsedBody);
       });
     });
